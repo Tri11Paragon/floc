@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project(floc)
+project(floc VERSION 0.0.2)
 
 option(ENABLE_ADDRSAN "Enable the address sanitizer" OFF)
 option(ENABLE_UBSAN "Enable the ub sanitizer" OFF)
