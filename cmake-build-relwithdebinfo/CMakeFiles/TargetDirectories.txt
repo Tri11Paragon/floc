@@ -1,0 +1,14 @@
+/home/brett/Documents/code/c++/floc/cmake-build-relwithdebinfo/CMakeFiles/floc.dir
+/home/brett/Documents/code/c++/floc/cmake-build-relwithdebinfo/CMakeFiles/edit_cache.dir
+/home/brett/Documents/code/c++/floc/cmake-build-relwithdebinfo/CMakeFiles/rebuild_cache.dir
+/home/brett/Documents/code/c++/floc/cmake-build-relwithdebinfo/CMakeFiles/list_install_components.dir
+/home/brett/Documents/code/c++/floc/cmake-build-relwithdebinfo/CMakeFiles/install.dir
+/home/brett/Documents/code/c++/floc/cmake-build-relwithdebinfo/CMakeFiles/install/local.dir
+/home/brett/Documents/code/c++/floc/cmake-build-relwithdebinfo/CMakeFiles/install/strip.dir
+/home/brett/Documents/code/c++/floc/cmake-build-relwithdebinfo/lib/blt/CMakeFiles/BLT.dir
+/home/brett/Documents/code/c++/floc/cmake-build-relwithdebinfo/lib/blt/CMakeFiles/edit_cache.dir
+/home/brett/Documents/code/c++/floc/cmake-build-relwithdebinfo/lib/blt/CMakeFiles/rebuild_cache.dir
+/home/brett/Documents/code/c++/floc/cmake-build-relwithdebinfo/lib/blt/CMakeFiles/list_install_components.dir
+/home/brett/Documents/code/c++/floc/cmake-build-relwithdebinfo/lib/blt/CMakeFiles/install.dir
+/home/brett/Documents/code/c++/floc/cmake-build-relwithdebinfo/lib/blt/CMakeFiles/install/local.dir
+/home/brett/Documents/code/c++/floc/cmake-build-relwithdebinfo/lib/blt/CMakeFiles/install/strip.dir
