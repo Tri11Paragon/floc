@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.28)
-project(floc VERSION 0.0.7)
+cmake_minimum_required(VERSION 3.25)
+project(floc VERSION 0.0.8)
 
 include(FetchContent)
 
