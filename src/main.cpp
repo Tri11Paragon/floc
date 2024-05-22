@@ -1,40 +1,78 @@
-#include <iostream>
+#include <functional>  // for function
+#include <memory>      // for allocator, __shared_ptr_access
+#include <string>      // for string, basic_string, operator+, to_string
+#include <vector>      // for vector
 
-#include "ftxui/dom/elements.hpp"
-#include "ftxui/screen/screen.hpp"
-#include "ftxui/screen/string.hpp"
+#include "ftxui/component/captured_mouse.hpp"  // for ftxui
+#include "ftxui/component/component.hpp"       // for Menu, Horizontal, Renderer
+#include "ftxui/component/component_base.hpp"  // for ComponentBase
+#include "ftxui/component/component_options.hpp"  // for MenuOption
+#include "ftxui/component/screen_interactive.hpp"  // for Component, ScreenInteractive
+#include "ftxui/dom/elements.hpp"  // for text, separator, bold, hcenter, vbox, hbox, gauge, Element, operator|, border
+
 
 int main()
 {
     using namespace ftxui;
+    auto screen = ScreenInteractive::TerminalOutput();
     
-    auto summary = [&] {
-        auto content = vbox({
-                                    hbox({text(L"- done:   "), text(L"3") | bold}) | color(Color::Green),
-                                    hbox({text(L"- active: "), text(L"2") | bold}) | color(Color::RedLight),
-                                    hbox({text(L"- queue:  "), text(L"9") | bold}) | color(Color::Red),
-                            });
-        return window(text(L" Summary "), content);
+    std::vector<std::string> left_menu_entries = {
+            "0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%",
+    };
+    std::vector<std::string> right_menu_entries = {
+            "0%", "1%", "2%", "3%", "4%", "5%", "6%", "7%", "8%", "9%", "10%",
     };
     
-    auto document =  //
-            vbox({
-                         hbox({
-                                      summary(),
-                                      summary(),
-                                      summary() | flex,
-                              }),
-                         summary(),
-                         summary(),
-                 });
+    auto menu_option = MenuOption();
+    menu_option.on_enter = screen.ExitLoopClosure();
     
-    // Limit the size of the document to 80 char.
-    document = document | size(WIDTH, LESS_THAN, 80);
+    int left_menu_selected = 0;
+    int right_menu_selected = 0;
+    Component left_menu_ =
+            Menu(&left_menu_entries, &left_menu_selected, menu_option);
+    Component right_menu_ =
+            Menu(&right_menu_entries, &right_menu_selected, menu_option);
     
-    auto screen = Screen::Create(Dimension::Full(), Dimension::Fit(document));
-    Render(screen, document);
+    Component container = Container::Horizontal({
+                                                        left_menu_,
+                                                        right_menu_,
+                                                });
     
-    std::cout << screen.ToString() << '\0' << std::endl;
+    auto renderer = Renderer(container, [&] {
+        int sum = left_menu_selected * 10 + right_menu_selected;
+        return vbox({
+                            // -------- Top panel --------------
+                            hbox({
+                                         // -------- Left Menu --------------
+                                         vbox({
+                                                      hcenter(bold(text("Percentage by 10%"))),
+                                                      separator(),
+                                                      left_menu_->Render(),
+                                              }),
+                                         separator(),
+                                         // -------- Right Menu --------------
+                                         vbox({
+                                                      hcenter(bold(text("Percentage by 1%"))),
+                                                      separator(),
+                                                      right_menu_->Render(),
+                                              }),
+                                         separator(),
+                                 }),
+                            separator(),
+                            // -------- Bottom panel --------------
+                            vbox({
+                                         hbox({
+                                                      text(" gauge : "),
+                                                      gauge(sum / 100.0),
+                                              }),
+                                         hbox({
+                                                      text("  text : "),
+                                                      text(std::to_string(sum) + " %"),
+                                              }),
+                                 }),
+                    }) |
+               border;
+    });
     
-    return EXIT_SUCCESS;
+    screen.Loop(renderer);
 }
