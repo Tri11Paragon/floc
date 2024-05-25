@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(floc VERSION 0.0.8)
+project(floc VERSION 0.0.9)
 
 include(FetchContent)
 
@@ -19,6 +19,10 @@ FetchContent_Declare(ftxui
         GIT_REPOSITORY https://github.com/ArthurSonzogni/ftxui
         GIT_TAG v5.0.0
 )
+FetchContent_Declare(json
+        GIT_REPOSITORY https://github.com/nlohmann/json.git
+        GIT_TAG v3.11.3
+)
 
 FetchContent_GetProperties(ftxui)
 if(NOT ftxui_POPULATED)
@@ -26,11 +30,12 @@ if(NOT ftxui_POPULATED)
     add_subdirectory(${ftxui_SOURCE_DIR} ${ftxui_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
-target_link_libraries(floc ${BLT_TARGET})
+target_link_libraries(floc PRIVATE BLT)
 target_link_libraries(floc
         PRIVATE ftxui::screen
         PRIVATE ftxui::dom
         PRIVATE ftxui::component
+        PRIVATE json
 )
 
 target_compile_options(floc PRIVATE -Wall -Werror -Wpedantic -Wno-comment)
